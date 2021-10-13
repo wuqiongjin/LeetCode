@@ -1,6 +1,29 @@
+//C++
+class Solution {
+public:
+    //哈希表
+    int majorityElement(vector<int>& nums) 
+    {
+        unordered_map<int, int> countMap;
+        for(auto e : nums)
+        {
+            countMap[e]++;
+            if(countMap[e] > (nums.size() / 2)) //如果大于数组长度的一般，直接return
+                return e;
+        }
+        //走到这里的话，说明最后一个元素加了之后，才大于长度的一半
+        return nums[nums.size() - 1];
+    }
+};
+
+
 int majorityElement(int* nums, int numsSize)
 {
     //摩尔投票法
+	//2个证明该方法肯定是正确的推论：
+	//推论一：若记众数的票数为+1 ，非众数的票数为 -1，则一定有所有数字的票数和 > 0 。
+	//推论二：若数组的前a个数字的 票数和 = 0，则 数组剩余(n-a)个数字的票数和一定仍 >0 ，即后 (n-a)个数字的 众数仍为 x 。
+
     int x = nums[0];
     int vote = 0;
     int i = 0;
