@@ -13,7 +13,7 @@ class Solution {
 public:
     //dfs
     //遍历root树的每个节点, 然后让root的每个结点都与subRoot整棵树进行比较
-    bool _isSameTree(TreeNode* root, TreeNode* subRoot)
+    bool _isSameTree(TreeNode* root, TreeNode* subRoot)	//判断两棵树相等的代码
     {
         if(root == nullptr && subRoot == nullptr){
             return true;
