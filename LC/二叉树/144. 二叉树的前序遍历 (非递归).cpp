@@ -1,14 +1,35 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+//1. Carl方法: 前序顺序: 根 左 右 --> 根 右 左 (入栈顺序需要调整一下)
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) 
+    {
+        if(root == nullptr) return {};
+        
+        vector<int> res;
+        stack<TreeNode*> st;
+        st.push(root);
+
+        while(!st.empty())
+        {
+            TreeNode* node = st.top();
+            res.push_back(node->val);
+            st.pop();
+            
+            if(node->right){
+                st.push(node->right);
+            }
+
+            if(node->left){
+                st.push(node->left);
+            }
+        }
+
+        return res;
+    }
+};
+
+
+//2. 杭哥思路
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) 
