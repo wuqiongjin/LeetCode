@@ -9,6 +9,7 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+ // 指针标记法(这里的指针直接使用root了, 更推荐定义一个额外的变量cur) + 栈
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) 
