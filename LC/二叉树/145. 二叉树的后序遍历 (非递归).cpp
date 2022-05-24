@@ -1,14 +1,36 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+//1. 前序遍历微调版本(改变了左右的入栈顺序、reverse结果res)		这个方法比较简单
+class Solution {
+public:
+    //前序遍历: 根 左 右  ---------->    根 右 左 (由于stack的性质, 我们需要将 先push 右、再push 左)
+    //后序遍历: 左 右 根  <-reverse->    根 右 左   -------->   根 左 右 (由于stack的性质, 需要先push 左、再push右) 
+    vector<int> postorderTraversal(TreeNode* root) 
+    {
+        if(root == nullptr) return {};
+        vector<int> res;
+        stack<TreeNode*> st;
+        st.push(root);
+        
+        while(!st.empty())
+        {
+            TreeNode* node = st.top();
+            res.push_back(node->val);
+            st.pop();
+
+            if(node->left){
+                st.push(node->left);
+            }
+
+            if(node->right){
+                st.push(node->right);
+            }
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+
+//2. 指针标记法 + 栈
 class Solution {
 public:
     //只使用1个prev指针去记录上一个"访问"的结点   (访问的意思是添加到ans结果中)
