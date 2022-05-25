@@ -1,3 +1,72 @@
+//3 刷
+class Solution {
+public:
+    //情况1: [1,2,3,5]  找0或者6, 此时会超出数组的两边    return {-1, -1}
+    //情况2: [1,2,3,5]  找4, 此时在数组的中间不存在该元素 return {-1, -1}
+    //情况3: [1,2,3,5]  找3, 此时数组中存在该元素        return {2, 2}
+    //寻找左边界
+    int LeftBorder(vector<int>& nums, int target)
+    {
+        int left = 0, right = nums.size() - 1;
+        int lborder = -2;
+        while(left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            if(nums[mid] < target){
+                left = mid + 1;
+            }
+            else if(nums[mid] >= target){
+                right = mid - 1;
+                lborder = right;
+            }
+        }
+        return lborder;
+    }
+
+    //寻找右边界
+    int RightBorder(vector<int>& nums, int target)
+    {
+        int left = 0, right = nums.size() - 1;
+        int rborder = -2;
+        while(left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            if(nums[mid] <= target){
+                left = mid + 1;
+                rborder = left;
+            }
+            else if(nums[mid] > target){
+                right = mid - 1;
+            }
+        }
+        return rborder;
+    }
+
+    vector<int> searchRange(vector<int>& nums, int target) 
+    {
+        int lborder = LeftBorder(nums, target);
+        int rborder = RightBorder(nums, target);
+
+        //处理情况1 (数组中不存在该元素, 且超过数组的边界)
+        if(lborder == -2 || rborder == -2){
+            return {-1, -1};
+        }
+        
+        //处理情况3
+        if(rborder - lborder > 1){
+            return {lborder + 1, rborder - 1};
+        }
+
+        //情况2 (数组中不存在该元素)
+        return {-1, -1};        
+    }
+};
+
+
+
+
+
+// 1刷
 // class Solution {
 // public:
     // int leftborder(vector<int>& nums, int target)
