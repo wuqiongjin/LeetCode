@@ -64,3 +64,57 @@ public:
         }
     }
 };
+
+
+//N-2
+class Solution {
+public:
+    ListNode* reverse(ListNode* head){
+        ListNode* newHead = nullptr;
+        ListNode* cur = head;
+        ListNode* next = cur;
+        while(next)
+        {
+            next = cur->next;
+            cur->next = newHead;
+            newHead = cur;
+            cur = next;
+        }
+        return newHead;
+    }
+
+    void reorderList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr){
+            return;
+        }
+        ListNode* fast = head, *slow = head, *prev = head;
+        while(fast && fast->next)
+        {
+            fast = fast->next->next;
+            prev = slow;
+            slow = slow->next;
+        }
+        prev->next = nullptr;
+
+        ListNode* l1 = head, *l2 = slow;
+        l2 = reverse(slow);
+        ListNode* cur1 = l1, *cur2 = l2;
+        prev = cur1;
+        while(cur1)
+        {
+            ListNode* next1 = cur1->next;
+            cur1->next = cur2;
+            cur1 = next1;
+
+            ListNode* next2 = cur2->next;
+            cur2->next = cur1;
+            prev = cur2;
+            cur2 = next2;
+        }
+        //针对1->2->3->4->5这种情况, 我们前面使用了prev->next = nullptr, 所以这里必须手动连接一下最后一个
+        if(cur2){
+            prev->next = cur2;
+        }
+        return;
+    }
+};
