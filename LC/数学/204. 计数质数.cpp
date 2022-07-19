@@ -33,7 +33,7 @@ public:
     int countPrimes(int n) {
         static deque<bool> dq(MAX_NUM, true);   //不定义成静态的, 会超时的...
         //这里直接从2开始, 只需要存储到sqrt(n)即可
-        for(int i = 2; i < sqrt(n); ++i)
+        for(int i = 2; i <= sqrt(n); ++i)
         {
             if(dq[i] == true){
                 for(int j = i * i; j < n; j += i)   //j从i*i开始, 每次增加一倍i. 4 6 8 10 ...
